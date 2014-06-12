@@ -7,6 +7,7 @@ RUN apt-get update -q -q \
  && apt-get -q -y clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 WORKDIR /mysql
+ENV MYSQL_HOME /mysql
 VOLUME ["/var/lib/mysql"]
 
 ADD my.cnf /mysql/
