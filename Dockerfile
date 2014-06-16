@@ -1,4 +1,4 @@
-FROM quay.io/3scale/base:trusty
+FROM ubuntu:trusty
 
 MAINTAINER Michal Cichra <michal@3scale.net> # 2014-06-12
 
