@@ -1,14 +1,18 @@
 REPO=mysql-tmpfs
 TAG=$(shell git rev-parse --abbrev-ref HEAD)
-IMAGE=$(REPO):$(TAG)
 REGISTRY=quay.io/3scale/
+IMAGE=$(REGISTRY)$(REPO):$(TAG)
+RUN:=docker run --privileged
 
 build:
-	docker build -t $(REGISTRY)$(IMAGE) --rm .
+	docker build -t $(IMAGE) --rm .
 bash:
-	docker run --rm --privileged -t -i $(REGISTRY)$(IMAGE) bash
+	$(RUN) -it --rm $(IMAGE) bash
 release: build push
 
+test: build
+	- docker rm --force mysql_tmpfs_test 2> /dev/null
+	$(RUN) -it --name mysql_tmpfs_test --detach $(IMAGE) sleep 10
+	docker exec mysql_tmpfs_test /mysql/run
 push:
-	docker tag $(TAG) $(REGISTRY)$(IMAGE)
-	docker push $(REGISTRY)$(IMAGE)
+	docker push $(IMAGE)
