@@ -8,7 +8,6 @@ echo "Mounting MySQL with ${MYSQL_RAM_SIZE}MB of RAM."
 umount ${MYSQL_DB} 2> /dev/null|| true
 mkdir -p ${MYSQL_DB}
 mount -t tmpfs -o size="${MYSQL_RAM_SIZE}m" tmpfs ${MYSQL_DB}
-
 chown -R mysql:mysql ${MYSQL_DB}
 mysql_install_db --user=mysql --datadir=${MYSQL_DB} > /dev/null
 
@@ -24,7 +23,8 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 UPDATE user SET password=PASSWORD("") WHERE user='root';
 EOF
 
-/usr/sbin/mysqld --bootstrap --verbose=0 < $tfile
+/usr/sbin/mysqld --user=mysql --bootstrap --verbose=0 < $tfile
 rm -f $tfile
 
-exec /usr/sbin/mysqld
+# exec /usr/sbin/mysqld
+exec /usr/bin/mysqld_safe
