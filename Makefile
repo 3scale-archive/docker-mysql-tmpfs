@@ -2,7 +2,7 @@ REPO=mysql-tmpfs
 TAG=$(shell git rev-parse --abbrev-ref HEAD)
 REGISTRY=quay.io/3scale/
 IMAGE=$(REGISTRY)$(REPO):$(TAG)
-RUN:=docker run --privileged
+RUN:=docker run --cap-add=SYS_ADMIN
 
 build:
 	docker build -t $(IMAGE) --rm .
