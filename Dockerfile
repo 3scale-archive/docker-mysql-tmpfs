@@ -2,14 +2,13 @@ FROM ubuntu:trusty
 
 MAINTAINER Michal Cichra <michal@3scale.net> # 2014-06-12
 
-ENV MYSQL_DB /var/lib/mysql/
+ENV MYSQL_DB="/var/lib/mysql/" MYSQL_HOME="/mysql"
 
 RUN apt-get update -q \
- && apt-get install -q -y mysql-server-5.5 \
+ && apt-get install -q -y mysql-server-5.6 \
  && apt-get -q -y clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
  && rm -rf $MYSQL_DB
 
-ENV MYSQL_HOME /mysql
 WORKDIR $MYSQL_HOME
 VOLUME ["$MYSQL_DB"]
 
