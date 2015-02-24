@@ -14,7 +14,9 @@ VOLUME ["$MYSQL_DB"]
 
 ADD my.cnf $MYSQL_HOME/
 ADD run $MYSQL_HOME/run
-RUN rm -rf /etc/mysql && ln -sf $MYSQL_HOME /etc/mysql
+RUN rm -rf /etc/mysql \
+ && ln -sf $MYSQL_HOME /etc/mysql \
+ && ln -s /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf
 
 EXPOSE 3306
 CMD ["/mysql/run"]
