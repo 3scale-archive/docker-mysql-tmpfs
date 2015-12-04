@@ -7,7 +7,7 @@ MYSQL_RAM_SIZE=${MYSQL_RAM_SIZE:-"2048"}
 echo "Mounting MySQL with ${MYSQL_RAM_SIZE}MB of RAM."
 umount ${MYSQL_DB} 2> /dev/null|| true
 mkdir -p ${MYSQL_DB}
-mount -t tmpfs -o size="${MYSQL_RAM_SIZE}m" tmpfs ${MYSQL_DB}
+mount -t tmpfs -o rw,size="${MYSQL_RAM_SIZE}m" tmpfs ${MYSQL_DB}
 chown -R mysql:mysql ${MYSQL_DB}
 mysql_install_db --user=mysql --datadir=${MYSQL_DB} > /dev/null
 
